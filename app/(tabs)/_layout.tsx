@@ -14,48 +14,57 @@ const layout = () => {
         padding:0,
         justifyContent:"center"
       },
-      // tabBarShowLabel:false,
+      tabBarShowLabel:false,
       tabBarActiveTintColor:Colors.black,
       tabBarInactiveTintColor:"#999"
     }}>
         <Tabs.Screen name="index" options={{ tabBarIcon: ({ color }) => (
-        <Ionicons name="compass-outline" size={30} color={color} />),}}/>
+        <Ionicons name="compass-outline" size={25} color={color} />),}}/>
         <Tabs.Screen name="bookmark" options={{ tabBarIcon: ({ color }) => (
-        <Ionicons name="book" size={30} color={color} />),}}/>
+        <Ionicons name="book" size={25} color={color} />),}}/>
         <Tabs.Screen name="search" options={{ tabBarIcon: ({ color }) => (
-        // <View style={{
-        //   // backgroundColor:Colors.primaryColor, 
-        //   // paddingHorizontal:20, 
-        //   // paddingVertical:12, 
-        //   // borderRadius:10,
-        //   // height:35
-        //   }}>
-        <Ionicons name="search-outline" size={30} color={color} />
+           <View style={{
+            backgroundColor: Colors.primaryColor, 
+            paddingHorizontal: 10, 
+            paddingVertical: 10,           
+            borderRadius: 10,
+            height: 45,
+            width:50, 
+            justifyContent: 'center', 
+            alignItems: 'center',
+            marginTop:10 
+            // zIndex: 1, 
+            // borderWidth: 2,  // Add border to see the view size
+            // borderColor: 'red',  // Temporary red border for debugging
+            }}>
+        <Ionicons name="search-outline" size={25} color={Colors.white} />
         // </View>
         ),}}/>
         <Tabs.Screen name="category" options={{ tabBarIcon: ({ color }) => (
         <View style={{
-          backgroundColor: Colors.primaryColor, 
+          backgroundColor: Colors.white, 
           paddingHorizontal: 10, 
-          paddingVertical: 5, 
+          paddingVertical: 10,           
           borderRadius: 10,
-          height: 50,
+          height: 45,
           width:50, 
           justifyContent: 'center', 
-          alignItems: 'center', 
+          alignItems: 'center',
+          marginTop:10 
           // zIndex: 1, 
-          borderWidth: 2,  // Add border to see the view size
-          borderColor: 'red',  // Temporary red border for debugging
+          // borderWidth: 2,  // Add border to see the view size
+          // borderColor: 'red',  // Temporary red border for debugging
           }}>
-            {/* <MaterialIcons name="category" size={20} color="#ffffff" /> */}
-            <Ionicons name="search-outline" size={20} color="#ffffff" style={{
+            <MaterialIcons name="category" size={25} color={Colors.black} /> 
+            {/* <Ionicons name="search-outline" size={20} color={Colors.black} style={{ */}
        
-          // paddingHorizontal: 20, 
-         }} />
+          {/* // paddingHorizontal: 20,  */}
+         {/* }} */}
+          
         </View>
         ),}}/>
         <Tabs.Screen name="profile" options={{ tabBarIcon: ({ color }) => (
-        <Ionicons name="link" size={30} color={color} />),}}/>
+        <Ionicons name="link" size={25} color={color} />),}}/>
     </Tabs>
   )
 }
