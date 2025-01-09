@@ -30,23 +30,26 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-  useEffect(()=>{
-    if(pathName){
-    console.log(pathName, "pathname")
-    // let title = pathName.replace("/", "")
-    let title = pathName.substring(1).charAt(0).toLocaleUpperCase() + pathName.substring(1).slice(1) 
-    if(pathName == "/"){
-      setTitle("Login")
-    }else{
-      setTitle(title)
-    }
+  // useEffect(()=>{
+  //   if(pathName){
+  //   console.log(pathName, "pathname")
+  //   // let title = pathName.replace("/", "")
+  //   if(pathName == "/"){
+  //     setTitle("Login")
+  //   }else{
+  //     let title = pathName.substring(1); // Remove leading "/"
+  //     title = title.charAt(0).toUpperCase() + title.slice(1); // Capitalize first letter
+  //     setTitle(title);
+  //   }
     
-  }
-  },[pathName])
+  // }else{
+  //   setTitle("Default Title"); 
+  // }
+  // },[pathName])
 
   return (
     <PaperProvider>
-      <Header title={title}/>
+      <Header title={""}/>
       <Stack screenOptions={{}}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>     
