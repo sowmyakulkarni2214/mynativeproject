@@ -17,7 +17,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./to/google-services.json"
+      "googleServicesFile": "./to/google-services.json",
       "package": "com.anonymous.myappnew"
     },
     "web": {
