@@ -18,7 +18,7 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./to/google-services.json",
-      "package": "com.anonymous.myappnew"
+      "package": "com.anonymous.myapp"
     },
     "web": {
       "bundler": "metro",
