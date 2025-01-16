@@ -17,8 +17,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./to/google-services.json",
-      "package": "com.anonymous.myapp"
+      "package": "com.anonymous.myapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
