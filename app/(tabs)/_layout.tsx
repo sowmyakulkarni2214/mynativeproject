@@ -20,11 +20,11 @@ const layout = () => {
     }}>
         <Tabs.Screen name="index" options={{headerShown:false, tabBarIcon: ({ color }) => (
         <Ionicons name="compass-outline" size={25} color={color} />),}}/>
-        <Tabs.Screen name="bookmark" options={{headerShown:false, tabBarIcon: ({ color }) => (
+        <Tabs.Screen name="blogpost" options={{headerShown:false, tabBarIcon: ({ color }) => (
         <Ionicons name="book" size={25} color={color} />),}}/>
-        <Tabs.Screen name="home" options={{headerShown:false, tabBarIcon: ({ color }) => (
+        {/* <Tabs.Screen name="home" options={{headerShown:false, tabBarIcon: ({ color }) => (
            <View style={{
-            backgroundColor: Colors.primaryColor, 
+            backgroundColor: Colors.white, 
             paddingHorizontal: 10, 
             paddingVertical: 10,           
             borderRadius: 10,
@@ -33,14 +33,10 @@ const layout = () => {
             justifyContent: 'center', 
             alignItems: 'center',
             marginTop:10 
-            // zIndex: 1, 
-            // borderWidth: 2,  // Add border to see the view size
-            // borderColor: 'red',  // Temporary red border for debugging
             }}>
-        {/* <Ionicons name="plus" size={25} color={Colors.white} /> */}
         <MaterialCommunityIcons name="plus" size={24} color="black" />        </View>
-        ),}}/>
-        <Tabs.Screen name="category" options={{headerShown:false, tabBarIcon: ({ color }) => (
+        ),}}/> */}
+        <Tabs.Screen name="speakers" options={{headerShown:false, tabBarIcon: ({ color }) => (
         <View style={{
           backgroundColor: Colors.white, 
           paddingHorizontal: 10, 
