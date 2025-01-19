@@ -9,3 +9,11 @@ export type proctoList = {
         imageUrl: string;
     }
 }
+
+export type  SpeakersProps= {
+    id: string,
+    name: string,
+    topic: string,
+    bio: string,
+    image: string|undefined,
+  };
