@@ -1,12 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors'
 
 const layout = () => {
-  return (
- 
+  return ( 
     <Tabs screenOptions={{
       tabBarStyle: {
         backgroundColor: Colors?.bgColor,
@@ -20,9 +19,10 @@ const layout = () => {
     }}>
         <Tabs.Screen name="index" options={{headerShown:false, tabBarIcon: ({ color }) => (
         <Ionicons name="compass-outline" size={25} color={color} />),}}/>
-        <Tabs.Screen name="blogpost" options={{headerShown:false, tabBarIcon: ({ color }) => (
-        <Ionicons name="book" size={25} color={color} />),}}/>
-        {/* <Tabs.Screen name="home" options={{headerShown:false, tabBarIcon: ({ color }) => (
+        <Tabs.Screen name="post" options={{headerShown:false, tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="post-outline" size={24} color="black" />        // <Ionicons name="book" size={25} color={color} />
+        ),}}/>
+         <Tabs.Screen name="program" options={{headerShown:false, tabBarIcon: ({ color }) => (
            <View style={{
             backgroundColor: Colors.white, 
             paddingHorizontal: 10, 
@@ -34,8 +34,9 @@ const layout = () => {
             alignItems: 'center',
             marginTop:10 
             }}>
-        <MaterialCommunityIcons name="plus" size={24} color="black" />        </View>
-        ),}}/> */}
+<MaterialIcons name="event" size={24} color="black" />        
+</View>
+        ),}}/> 
         <Tabs.Screen name="speakers" options={{headerShown:false, tabBarIcon: ({ color }) => (
         <View style={{
           backgroundColor: Colors.white, 
@@ -51,7 +52,8 @@ const layout = () => {
           // borderWidth: 2,  // Add border to see the view size
           // borderColor: 'red',  // Temporary red border for debugging
           }}>
-            <MaterialIcons name="category" size={25} color={Colors.black} /> 
+            <MaterialCommunityIcons name="speaker-wireless" size={24} color="black" />
+            {/* <MaterialIcons name="speaker-wireless" size={25} color={Colors.black} />  */}
             {/* <Ionicons name="search-outline" size={20} color={Colors.black} style={{ */}
        
           {/* // paddingHorizontal: 20,  */}
@@ -60,7 +62,10 @@ const layout = () => {
         </View>
         )}}/>
         <Tabs.Screen name="profile" options={{headerShown:false, tabBarIcon: ({ color }) => (
-        <Ionicons name="link" size={25} color={color} />)}}/>
+          <AntDesign name="user" size={24} color="black" />
+
+        // <Ionicons name="link" size={25} color={color} />
+        )}}/>
     </Tabs>
   )
 }

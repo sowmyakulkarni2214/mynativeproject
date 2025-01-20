@@ -7,8 +7,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { router, Stack } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import { router, Stack, usePathname, useRouter } from "expo-router";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -25,6 +25,8 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { Colors } from "@/constants/Colors";
+import { contextType } from "@/contextApi/CreateDataContext";
+import { Context } from "@/contextApi/AuthContext";
 // import DeviceInfo from 'react-native-device-info';
 
 export default function HomeScreen() {
@@ -39,7 +41,13 @@ export default function HomeScreen() {
   >(undefined);
   const notificationListener = useRef<Notifications.EventSubscription>();
   const responseListener = useRef<Notifications.EventSubscription>();
-
+  const { boundActions } = useContext<contextType>(Context);
+  const { signIn, updateUserData } = boundActions;
+  const pathName = usePathname()
+  const router = useRouter()
+  const [error, setError] = useState<boolean>(false)
+  const [message, setMessage] = useState<boolean>(false)  
+  const [loading, setLoading] = useState<boolean>(false)
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -158,6 +166,20 @@ export default function HomeScreen() {
 
   // Get unique device ID
 
+  const handleLogin = ()=>{
+    try {
+      signIn( {email,
+        password,
+        router,
+        setLoading,
+        setError,
+        setMessage,
+        pathName})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Stack.Screen
@@ -169,11 +191,11 @@ export default function HomeScreen() {
         {/* style={styles.backgroundImage} */}
         {/* > */}
         <View style={{ alignItems: "center", ...styles.logoContainer }}>
-          <Image
+          {/* <Image
             source={require("../../assets/images/sciencelogo.png")}
             style={{ width: 200, height: 200 }}
             resizeMode="contain"
-          />
+          /> */}
 
           {/* <Image
               source={require("../../assets/images/ctddr_logo.jpg")}
@@ -201,7 +223,7 @@ export default function HomeScreen() {
             </View>
             <TouchableOpacity
               style={styles.loginButton}
-              // onPress={handleLogin}
+              onPress={handleLogin}
             >
               <Text style={styles.loginButtonText}>Sigin In</Text>
             </TouchableOpacity>
@@ -209,6 +231,7 @@ export default function HomeScreen() {
         </ScrollView>
         {/* </ImageBackground> */}
       </View>
+    
       {/* <View
       style={{
         flex: 1,
