@@ -51,7 +51,7 @@ export default function RootLayout() {
     <PaperProvider>
       <Header title={""}/>
       <Stack screenOptions={{}}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(session)" options={{ headerShown: false }} />
         </Stack>     
     </PaperProvider>
   );
