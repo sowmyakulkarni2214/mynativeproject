@@ -1,27 +1,42 @@
 // import { Image, StyleSheet, Platform } from 'react-native';
 
-import { instance } from '@/api/baseUrlConfig';
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { router, Stack } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, ImageBackground, Image, TextInput, TouchableOpacity, Text, ScrollView, Platform, Button } from 'react-native';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
+import { instance } from "@/api/baseUrlConfig";
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { router, Stack } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Platform,
+  Button,
+  ImageBackground,
+} from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
+import { Colors } from "@/constants/Colors";
+// import DeviceInfo from 'react-native-device-info';
 
 export default function HomeScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
-  const [notification, setNotification] = useState<Notifications.Notification | undefined>(
-    undefined
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>(
+    []
   );
+  const [notification, setNotification] = useState<
+    Notifications.Notification | undefined
+  >(undefined);
   const notificationListener = useRef<Notifications.EventSubscription>();
   const responseListener = useRef<Notifications.EventSubscription>();
 
@@ -32,36 +47,45 @@ export default function HomeScreen() {
       shouldSetBadge: false,
     }),
   });
-  
 
-  const addToken = async() =>{
-    let user_id = AsyncStorage.getItem("user_id")
+  const addToken = async () => {
+    let user_id = AsyncStorage.getItem("user_id");
     try {
-      let res = await instance.post("/send-notification", {pushToken:expoPushToken, user_id})
-      console.log(res, "adding token")
+      let res = await instance.post("/send-notification", {
+        pushToken: expoPushToken,
+        user_id,
+      });
+      console.log(res, "adding token");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => {
-      console.log(token, "token")
-      token && setExpoPushToken(token)});   
-  
-    if (Platform.OS === 'android') {
-      Notifications.getNotificationChannelsAsync().then(value => setChannels(value ?? []));
-    }
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
+    registerForPushNotificationsAsync().then((token) => {
+      console.log(token, "token");
+      token && setExpoPushToken(token);
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    if (Platform.OS === "android") {
+      Notifications.getNotificationChannelsAsync().then((value) =>
+        setChannels(value ?? [])
+      );
+    }
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
     return () => {
       notificationListener.current &&
-        Notifications.removeNotificationSubscription(notificationListener.current);
+        Notifications.removeNotificationSubscription(
+          notificationListener.current
+        );
       responseListener.current &&
         Notifications.removeNotificationSubscription(responseListener.current);
     };
@@ -71,38 +95,39 @@ export default function HomeScreen() {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "You've got mail! 📬",
-        body: 'Here is the notification body',
-        data: { data: 'goes here', test: { test1: 'more data' } },
+        body: "Here is the notification body",
+        data: { data: "goes here", test: { test1: "more data" } },
       },
-      trigger:null,
+      trigger: null,
       // trigger: {
       //   type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
       //   seconds: 2,
       // },
     });
   }
-  
+
   async function registerForPushNotificationsAsync() {
     let token;
-  
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('myNotificationChannel', {
-        name: 'A channel is needed for the permissions prompt to appear',
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("myNotificationChannel", {
+        name: "A channel is needed for the permissions prompt to appear",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: "#FF231F7C",
       });
     }
-  
+
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
+      if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
         return;
       }
       // Learn more about projectId:
@@ -110,9 +135,10 @@ export default function HomeScreen() {
       // EAS projectId is used here.
       try {
         const projectId =
-          Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
+          Constants?.expoConfig?.extra?.eas?.projectId ??
+          Constants?.easConfig?.projectId;
         if (!projectId) {
-          throw new Error('Project ID not found');
+          throw new Error("Project ID not found");
         }
         token = (
           await Notifications.getExpoPushTokenAsync({
@@ -124,78 +150,72 @@ export default function HomeScreen() {
         token = `${e}`;
       }
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert("Must use physical device for Push Notifications");
     }
-  
+
     return token;
   }
-  
 
-  const handleLogin = async() => {    
-    console.log("iojdsfsdfsd")
-    try {
-      let res = await instance.post("/signin",{
-      // let res = await axios.post("http://localhost:8080/api/signin",{
-        email:email?.trim().toLowerCase(),
-        password:password.trim()} )
+  // Get unique device ID
 
-      console.log(res?.data?.result, "dat")
-      let data = res?.data?.result
-      await AsyncStorage.setItem("token",data?.token.toString())
-      await AsyncStorage.setItem("user_id",data?._id.toString())
-      await AsyncStorage.setItem("user_email",data?.email.toString())
-      await AsyncStorage.setItem("isLoggedIn",data?.isLoggedIn.toString())
-      await AsyncStorage.setItem("user_type_id",data?.user_type_id.toString())
-      // router.navigate("Screens/home")
-      addToken()
-      
-    } catch (error) {
-      console.log(error)
-    }
-    // Implement your login logic here
-  };
-  return (<>
-    <Stack.Screen options={{headerTransparent:true, headerTitle:""}}>      
-
-    </Stack.Screen>
-    <View style={styles.container}>
-    {/* <ImageBackground source={{ uri: 'https://www.bootdey.com/image/280x280/9370DB/9370DB' }} style={styles.backgroundImage}> */}
-      {/* <View style={styles.logoContainer}>
-        <Image source={{ uri: "../../assets/images/icon.png" }} style={styles.logo} />
-      </View> */}
-       <ScrollView automaticallyAdjustContentInsets style={{}} >
-      <View style={styles.formContainer}>
-        <View style={styles.card}>
-          <TextInput
-            placeholder="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
+  return (
+    <>
+      <Stack.Screen
+        options={{ headerTransparent: true, headerTitle: "" }}
+      ></Stack.Screen>
+      <View style={styles.container}>
+        {/* <ImageBackground */}
+        {/* source={require("../../assets/images/cdri_logo.png")} */}
+        {/* style={styles.backgroundImage} */}
+        {/* > */}
+        <View style={{ alignItems: "center", ...styles.logoContainer }}>
+          <Image
+            source={require("../../assets/images/sciencelogo.png")}
+            style={{ width: 200, height: 200 }}
+            resizeMode="contain"
           />
+
+          {/* <Image
+              source={require("../../assets/images/ctddr_logo.jpg")}
+              style={styles.logo}
+            /> */}
         </View>
-        <View style={styles.card}>
-          <TextInput
-            placeholder="Password"
-            secureTextEntry={true}
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>Log In</Text>
-        </TouchableOpacity>
+        <ScrollView automaticallyAdjustContentInsets style={{}}>
+          <View style={styles.formContainer}>
+            <View style={styles.card}>
+              <TextInput
+                placeholder="Email"
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+            <View style={styles.card}>
+              <TextInput
+                placeholder="Password"
+                secureTextEntry={true}
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.loginButton}
+              // onPress={handleLogin}
+            >
+              <Text style={styles.loginButtonText}>Sigin In</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+        {/* </ImageBackground> */}
       </View>
-    </ScrollView>
-    {/* </ImageBackground> */}
-  </View>
-  <View
+      {/* <View
       style={{
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-      }}>
-      <Text>Your expo push token: {expoPushToken}</Text>     
+      }}> */}
+      {/* <Text>Your expo push token: {expoPushToken}</Text>     
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>Title: {notification && notification.request.content.title} </Text>
         <Text>Body: {notification && notification.request.content.body}</Text>
@@ -206,66 +226,44 @@ export default function HomeScreen() {
         onPress={async () => {
           await schedulePushNotification();
         }}
-      />
-    </View>
-  </>
-);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      /> */}
+      {/* </View> */}
+    </>
+  );
+}
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-
+    backgroundColor: "#fff",
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   logoContainer: {
-    alignItems: 'center',
-    marginTop: 160,
+    marginTop: "20%",
+    marginBottom: "20%",
+    flex: 1, // Ensures the container takes up the full screen
+    justifyContent: "center", // Centers content vertically
+    backgroundColor: "#ffffff", // Optional: background color for the screen
   },
   logo: {
-    width: 120,
-    height: 120,
-    borderRadius:60,
+    width: "100%",
+    height: "100%",
+    borderRadius: 60,
   },
   formContainer: {
     marginHorizontal: 20,
-    marginTop:"50%",
-    padding:20,
-    borderRadius:10,
-    backgroundColor:'rgba(255, 255, 255, 0.3)'
+    marginTop: 20,
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -274,23 +272,23 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     marginBottom: 20,
-    padding:10,
+    padding: 10,
   },
   input: {
     height: 40,
     paddingHorizontal: 10,
-    borderBottomWidth:1,
-    borderBottomColor:'#B0C4DE'
+    borderBottomWidth: 1,
+    borderBottomColor: "#B0C4DE",
   },
   loginButton: {
-    backgroundColor: '#7B68EE',
+    backgroundColor: Colors.primaryColor,
     padding: 10,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   loginButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   // titleContainer: {
