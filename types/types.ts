@@ -17,3 +17,13 @@ export type  SpeakersProps= {
     bio: string,
     image: string|undefined,
   };
+
+  export type stateType = {
+    userData: {
+      _id: string;
+      email: string;
+      name: string;
+      token:string;
+    
+    };
+}

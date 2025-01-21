@@ -1,4 +1,5 @@
 import SpeakerCard from "@/components/SpeakerCard";
+import { Colors } from "@/constants/Colors";
 import { SpeakersProps } from "@/types/types";
 import { Stack } from "expo-router";
 import React from "react";
@@ -89,7 +90,7 @@ const ConferenceSpeakers = () => {
         options={{ headerTransparent: true, headerTitle: "" }}
       ></Stack.Screen>
       <View style={styles.container}>
-        <Text style={styles.header}>Science Conference Speakers</Text>
+        <Text style={styles.header}>Speakers</Text>
         <FlatList
           data={speakers}
           renderItem={({ item }) => <SpeakerCard speaker={item} />}
@@ -106,12 +107,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f4f4f4",
     paddingTop: 20,
     paddingHorizontal: 10,
+
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+    color:Colors.skyBlue
   },
 });
 

@@ -11,6 +11,8 @@ import {
 } from "react-native";
 // import Video from "react-native-video";
 import { router, Stack } from "expo-router";
+import { imageUrl } from "@/api/baseUrlConfig";
+import { Colors } from "@/constants/Colors";
 
 // Type for the blog post data (optional but helpful for large apps)
 interface BlogPostProps {
@@ -35,8 +37,7 @@ const BlogPost = () => {
     date: "January 18, 2025",
     content:
       "The conference will explore the latest developments in medical science, including gene editing, immunotherapy, and personalized medicine.",
-    images: [
-      "conference.jpg",
+    images: ["conference2.jpg",
       // "../../assets/images/conference.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -49,7 +50,7 @@ const BlogPost = () => {
     content:
       "This session will discuss the future of AI and machine learning, and how it will shape industries such as healthcare, education, and transportation.",
     images: [
-      "ai_future.jpg",
+      "conference2.jpg",
       // "../../assets/images/ai_future.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -61,8 +62,7 @@ const BlogPost = () => {
     date: "March 10, 2025",
     content:
       "In this session, global experts will address the importance of sustainability and the need for innovative solutions in industries such as energy, waste management, and agriculture.",
-    images: [
-      "sustainability.jpg",
+    images: ["conference2.jpg",
       // "../../assets/images/sustainability.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -74,8 +74,7 @@ const BlogPost = () => {
     date: "April 12, 2025",
     content:
       "This talk will explore the latest discoveries in space exploration, including Mars missions, new space telescopes, and private space ventures.",
-    images: [
-      "space_exploration.jpg",
+    images: ["conference2.jpg",
       // "../../assets/images/space_exploration.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -87,8 +86,7 @@ const BlogPost = () => {
     date: "May 25, 2025",
     content:
       "This conference session will focus on the impact of digital transformation in education, from online learning to virtual classrooms and AI-powered tools.",
-    images: [
-      "education_future.jpg",
+    images: [ "conference2.jpg",
       // "../../assets/images/education_future.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -101,7 +99,7 @@ const BlogPost = () => {
     content:
       "This session will dive into the revolutionary changes blockchain technology is bringing to finance, including decentralized finance (DeFi) and blockchain's potential for security and transparency.",
     images: [
-      "blockchain_finance.jpg",
+      "conference2.jpg",
       // "../../assets/images/blockchain_finance.jpg",
     ],
     // videoUrl: "", // Example video URL
@@ -131,11 +129,16 @@ const BlogPost = () => {
           <Text style={styles.content}>{item.content}</Text>
 
         
-          {item?.images?.map((imageUrl: string, index: number) => (
-            
+          {item?.images?.map((image: string, index: number) => (
+                  
+                //   <Image
+                //   style={styles.image}
+                //   resizeMode="cover"
+                //   source={{ uri: `${imageUrl}/assets/images/${image}` }}
+                // />
                   <Image
                     key={index}
-                    source={require("../../assets/images/conference.jpg")}
+                    source={require(`@/assets/images/conference.jpg`)}                    
                     style={[styles.image, { width: width - 20 }]} // Make image responsive based on screen width
                   />
                 
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#333",
+    color: Colors.skyBlue,
   },
   author: {
     fontSize: 14,

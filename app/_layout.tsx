@@ -3,15 +3,15 @@ import { useFonts } from 'expo-font';
 import { Stack, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { PaperProvider } from 'react-native-paper';
 import Header from '@/components/Header';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+import { Provider } from '@/contextApi/AuthContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,7 +20,7 @@ export default function RootLayout() {
   });
   const pathName=usePathname()
   const[title, setTitle] = useState<string>("")
-
+  // console.log(state, "statedata")
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -30,6 +30,8 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+  
+
   // useEffect(()=>{
   //   if(pathName){
   //   console.log(pathName, "pathname")
@@ -48,11 +50,17 @@ export default function RootLayout() {
   // },[pathName])
 
   return (
+    <Provider>      
     <PaperProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}> {/* Wrap your app inside GestureHandlerRootView */}
       <Header title={""}/>
       <Stack screenOptions={{}}>
         <Stack.Screen name="(session)" options={{ headerShown: false }} />
+        
         </Stack>     
+        </GestureHandlerRootView>
     </PaperProvider>
+    </Provider>
   );
 }
+
