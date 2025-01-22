@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors';
 import { useNavigation, usePathname, useRouter } from 'expo-router';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -16,25 +17,29 @@ const Header = ({ title}:{title:string}) => {
     //         setTitle(title[1])
     //     }
     // }, [pathname])
-  const _goBack = () => {
-        navigation.goBack()   
+    console.log(pathName, "pathname")
+  const goBack = () => {
+        if(pathName != '/'){
+          navigation.goBack() 
+        }
+          
     // else{
     //     console.log(title)
     // }   
     
   };
 
-  const _handleSearch = () => console.log('Searching');
+  const handleSearch = () => console.log('Searching');
 
-  const _handleMore = () => console.log('Shown more');
+  const handleMore = () => console.log('Shown more');
 
   return (
     <Appbar.Header style={styles.container} >
-      <Appbar.BackAction onPress={_goBack} />
+      {(pathName!=='/')?<Appbar.BackAction onPress={goBack} color={Colors.black}/>:""}
       <Appbar.Content title={title} />
       {/* <View style={styles.account}> */}
-      <Appbar.Action style={{margin:0}} icon="bell" onPress={_handleMore} />
-      <Appbar.Action style={{margin:0}}icon="account-outline" onPress={_handleSearch} />
+      <Appbar.Action style={{margin:0}} icon="bell" onPress={handleMore} color={Colors.black}/>
+      <Appbar.Action style={{margin:0}}icon="account-outline" onPress={handleSearch} color={Colors.black} />
       {/* </View> */}
     
       
@@ -55,9 +60,11 @@ const Header = ({ title}:{title:string}) => {
 
   const styles = StyleSheet.create({
   container:{
-height:40, 
+  height:60, 
    padding:0,
    margin:0,
+   backgroundColor:Colors.white,
+
 
   }
    

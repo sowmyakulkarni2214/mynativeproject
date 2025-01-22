@@ -988,6 +988,7 @@ const onBackgroundMeet: actionFunctionType = (dispatch) => {
 
 // app signin function
 const signIn: actionFunctionType = (dispatch) => {
+  
   return async ({
     email,
     password,
@@ -1000,27 +1001,36 @@ const signIn: actionFunctionType = (dispatch) => {
     // setIsEmailVerified
   }) => {
     try {
+      console.log("in sigin", email,
+        password,
+        router,
+        setLoading,
+        setError,
+        setMessage,
+        pathName,)
       setLoading(true);
       let response;
-      response = await instance.post("/api/signin", {
+      response = await instance.post("/signin", {
         email,
         password,
         // request_origin: "app",
       });
+      console.log(response, "sssssssssss")
       setMessage(response?.data?.message);
       // setVisibleSnackErr(true);
       // setTimeout(() => {
       //   hideModal();
       //   hideLoginModal();
       // }, 1000);
-      const data = response?.data?.userData;
-      const token = response?.data?.token;
-      await AsyncStorage.setItem("token", token.toString());
+      const data = response?.data?.result;
+      // const token = response?.data?.token;
+      await AsyncStorage.setItem("token", data?.token.toString());
       await AsyncStorage.setItem("user_id", data?._id.toString());
       await AsyncStorage.setItem("user_email", data?.email.toString());
-      // await AsyncStorage.setItem("isSignInApp", data?.isSignIn_App.toString());
+      await AsyncStorage.setItem("isLoggedIn", data?.isLoggedIn.toString());
       await AsyncStorage.setItem("user_name", data?.name.toString());
       await AsyncStorage.setItem("user_type", data?.user_type_id.toString());
+      await AsyncStorage.setItem("status", data?.status.toString());
       // await AsyncStorage.setItem(
       //   "is_email_verified",
       //   data?.email_verified.toString()
@@ -1033,9 +1043,9 @@ const signIn: actionFunctionType = (dispatch) => {
       // });
       // dispatch({ type: "SOCKET", payload: socket });
 
-      await AsyncStorage.setItem("status", data?.status.toString());
-      setLoading(false);
-      router.push("/(session)/home");
+    
+      setLoading(false);  
+      router.push("/(session)/post");
 
       setLoading(false);
       setMessage("");

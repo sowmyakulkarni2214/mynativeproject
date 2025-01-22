@@ -7,8 +7,9 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { router, Stack, usePathname, useRouter } from "expo-router";
-import React, { useContext, useEffect, useRef, useState } from "react";
+
+import { router, Stack, useFocusEffect, usePathname, useRouter } from "expo-router";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -25,8 +26,10 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { Colors } from "@/constants/Colors";
-import { contextType } from "@/contextApi/CreateDataContext";
 import { Context } from "@/contextApi/AuthContext";
+import { contextType } from "@/contextApi/CreateDataContext";
+import Bottomsheet from "@/components/BottomSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 // import DeviceInfo from 'react-native-device-info';
 
 export default function HomeScreen() {
@@ -41,13 +44,27 @@ export default function HomeScreen() {
   >(undefined);
   const notificationListener = useRef<Notifications.EventSubscription>();
   const responseListener = useRef<Notifications.EventSubscription>();
-  const { boundActions } = useContext<contextType>(Context);
+  const { state, boundActions } = useContext<contextType>(Context);
   const { signIn, updateUserData } = boundActions;
   const pathName = usePathname()
   const router = useRouter()
   const [error, setError] = useState<boolean>(false)
   const [message, setMessage] = useState<boolean>(false)  
   const [loading, setLoading] = useState<boolean>(false)
+
+
+  console.log(state?.isSignIn, "llllllllllllllllll")
+  useFocusEffect(useCallback(()=>{   
+      if (!state?.isSignIn) {
+        // router.navigate("/(nosession)/usersession")
+        // router.navigate("/(nosession)/intro")
+        router.navigate("/")
+      } else {        
+        router.navigate("/(session)/post")
+      }
+ 
+  },[state.isSignIn]))
+
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -167,8 +184,9 @@ export default function HomeScreen() {
   // Get unique device ID
 
   const handleLogin = ()=>{
+    console.log("function calling singin")
     try {
-      signIn( {email,
+      signIn({email,
         password,
         router,
         setLoading,
@@ -179,6 +197,8 @@ export default function HomeScreen() {
       console.log(error)
     }
   }
+
+
 
   return (
     <>
@@ -221,15 +241,14 @@ export default function HomeScreen() {
                 onChangeText={setPassword}
               />
             </View>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={handleLogin}
-            >
-              <Text style={styles.loginButtonText}>Sigin In</Text>
-            </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>Sign In</Text> {/* Ensure this is wrapped in a <Text> */}
+        </TouchableOpacity>
           </View>
         </ScrollView>
         {/* </ImageBackground> */}
+        <Bottomsheet /> {/* Your component with gestures */}
       </View>
     
       {/* <View
@@ -251,6 +270,8 @@ export default function HomeScreen() {
         }}
       /> */}
       {/* </View> */}
+     
+      
     </>
   );
 }

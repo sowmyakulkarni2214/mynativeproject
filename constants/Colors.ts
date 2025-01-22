@@ -26,5 +26,9 @@ export const Colors = {
   primaryColor:"#3b82f6",
   bgColor:"#f4f4f4",
   black:"#27283a",
-  white:"#FFFFFF"
+  white:"#FFFFFF",
+  bodyColor:"#161730",
+  blueLight:"#4895ff",
+  skyBlue:"#3b82f6",
+  gray:"#212246"
 };
