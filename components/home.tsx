@@ -5,7 +5,7 @@ import {useHeaderHeight} from "@react-navigation/elements"
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors'
 import Search from '@/components/Search'
-import ProctoList from '@/components/ProctoList'
+import ProctoList from '@/components/UsersList'
 
 const home = () => {
   const headerHeight = useHeaderHeight()

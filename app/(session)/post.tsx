@@ -11,7 +11,7 @@ import {
 } from "react-native";
 // import Video from "react-native-video";
 import { router, Stack } from "expo-router";
-import { imageUrl } from "@/api/baseUrlConfig";
+// import { imageUrl } from "@/api/baseUrlConfig";
 import { Colors } from "@/constants/Colors";
 
 // Type for the blog post data (optional but helpful for large apps)
