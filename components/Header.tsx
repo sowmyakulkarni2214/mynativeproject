@@ -19,13 +19,11 @@ const Header = ({ title}:{title:string}) => {
     // }, [pathname])
     console.log(pathName, "pathname")
   const goBack = () => {
-        if(pathName != '/'){
+        if(pathName != '/' && pathName != '/users'){
           navigation.goBack() 
         }
           
-    // else{
-    //     console.log(title)
-    // }   
+   
     
   };
 
@@ -35,7 +33,7 @@ const Header = ({ title}:{title:string}) => {
 
   return (
     <Appbar.Header style={styles.container} >
-      {(pathName!=='/')?<Appbar.BackAction onPress={goBack} color={Colors.black}/>:""}
+      {(pathName!=='/' && pathName!=='/(admin)/users')?<Appbar.BackAction onPress={goBack} color={Colors.black}/>:""}
       <Appbar.Content title={title} />
       {/* <View style={styles.account}> */}
       <Appbar.Action style={{margin:0}} icon="bell" onPress={handleMore} color={Colors.black}/>

@@ -28,5 +28,7 @@
         <data android:scheme="com.anonymous.myapp"/>
       </intent-filter>
     </activity>
+    
   </application>
+  
 </manifest>

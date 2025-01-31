@@ -12,6 +12,7 @@ import Header from '@/components/Header';
 SplashScreen.preventAutoHideAsync();
 import { Provider } from '@/contextApi/AuthContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -31,6 +32,8 @@ export default function RootLayout() {
     return null;
   }
   
+  
+
 
   // useEffect(()=>{
   //   if(pathName){
@@ -55,8 +58,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}> {/* Wrap your app inside GestureHandlerRootView */}
       <Header title={""}/>
       <Stack screenOptions={{}}>
+  
         <Stack.Screen name="(session)" options={{ headerShown: false }} />
-        
+        <Stack.Screen name="(admin)" options={{ headerShown: false }} />        
         </Stack>     
         </GestureHandlerRootView>
     </PaperProvider>

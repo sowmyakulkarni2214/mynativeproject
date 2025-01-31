@@ -248,7 +248,7 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
         {/* </ImageBackground> */}
-        <Bottomsheet /> {/* Your component with gestures */}
+       
       </View>
     
       {/* <View

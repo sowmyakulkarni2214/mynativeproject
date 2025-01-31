@@ -1015,7 +1015,7 @@ const signIn: actionFunctionType = (dispatch) => {
         password,
         // request_origin: "app",
       });
-      console.log(response, "sssssssssss")
+      console.log(response.toString(), "sssssssssss")
       setMessage(response?.data?.message);
       // setVisibleSnackErr(true);
       // setTimeout(() => {
@@ -1023,6 +1023,7 @@ const signIn: actionFunctionType = (dispatch) => {
       //   hideLoginModal();
       // }, 1000);
       const data = response?.data?.result;
+      console.log(data.toString(), "sssssssssss")
       // const token = response?.data?.token;
       await AsyncStorage.setItem("token", data?.token.toString());
       await AsyncStorage.setItem("user_id", data?._id.toString());
@@ -1045,7 +1046,12 @@ const signIn: actionFunctionType = (dispatch) => {
 
     
       setLoading(false);  
-      router.push("/(session)/post");
+      if(data?.user_type_id.toString() == 1){
+        router.push("/(admin)/users")
+      }else{
+        router.push("/(session)/post");
+      }
+      
 
       setLoading(false);
       setMessage("");

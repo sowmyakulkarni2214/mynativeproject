@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { proctoList} from "@/types/types";
 
-type Friend = {
+type userType = {
     id: string;
     name: string;
     imageUrl: string;
@@ -11,7 +11,7 @@ type Friend = {
     rating: number;
     sports: string[];
   };
-const friends:Friend[] = [
+const user:userType[] = [
   {
     id: '1',
     name: 'John Parker',
@@ -59,9 +59,9 @@ const friends:Friend[] = [
   },
 ];
 
-const ProctoList = ({}) => {
+const UsersList = ({}) => {
   
-  const renderFriend = ({ item }: { item: Friend }) => {
+  const renderUser = ({ item }: { item: userType }) => {
     return (
       <View style={styles.card}>
         <Image source={{ uri: item.imageUrl }} style={styles.image} />
@@ -86,8 +86,8 @@ const ProctoList = ({}) => {
 
   return (
     <FlatList
-      data={friends}
-      renderItem={renderFriend}
+      data={user}
+      renderItem={renderUser}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.container}
     />
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProctoList;
+export default UsersList;
